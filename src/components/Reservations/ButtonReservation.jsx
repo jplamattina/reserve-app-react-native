@@ -1,0 +1,90 @@
+import React from 'react'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { colors } from '../../constants/colors'
+import ButtonCard from './ButtonCard'
+import ReserveButtonCard from './ReserveButtonCard'
+
+const ButtonReservation = () => {
+  return (
+    <View style={styles.container}>
+      <ButtonCard style={styles.card}>
+          {/* <Pressable onPress={()=>navigation.navigate('ItemListCategory', {})}>
+          </Pressable> */}
+          <ReserveButtonCard style={styles.reserveCard}>
+              <View style={styles.circle}>
+                <Text style={styles.textCircle}>+</Text>
+              </View>
+          </ReserveButtonCard>
+          <Text style={styles.textMessage}>CREA UNA RESERVA</Text>
+      </ButtonCard>
+
+    <View>
+    </View>
+</View>
+  )
+}
+
+export default ButtonReservation
+
+const styles = StyleSheet.create({
+  container:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  card:{
+    width: 350,
+    height: 95,
+    marginVertical: 10,
+    marginHorizontal: 10,
+    shadowColor: colors.teal900,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+},
+reserveCard: {
+    width: 77,
+    height: 77,
+    marginLeft: 10,
+    backgroundColor: colors.teal200,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textMessage: {
+    width: '70%',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.teal200
+  },
+  text: {
+    color: colors.platinum,
+    textAlign: "center",
+    fontSize: 20,
+  },
+  circle:{
+    width: 50,
+    height: 50,
+    backgroundColor: colors.teal700,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textCircle: {
+    width: 70,
+    height: 70,
+    fontSize: 50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: "center",
+    color: colors.teal200
+  },
+})

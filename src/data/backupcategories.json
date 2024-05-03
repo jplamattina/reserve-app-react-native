@@ -1,0 +1,33 @@
+[
+    {"manualidades": [
+        "Ceramica",
+        "Dibujo",
+        "Alfareria"
+        ]},
+    {"deportes": [
+        "Futbol",
+        "Tenis",
+        "Padel",
+        "Rugby",
+        "Natacion"
+    ]},
+    {"restaurantes": [
+        "Mexicana",
+        "Americana",
+        "Comida Rapida",
+        "Oriental",
+        "Pizzerias",
+        "Arabe",
+        "Latina",
+        "Local"
+    ]},
+    {"belleza": [
+        "Skincare",
+        "Manicura",
+        "Peluqueria",
+        "Pestaña",
+        "Cejas",
+        "Masajes"
+    ]},
+    {"Tatuajes":[]}
+]
