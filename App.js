@@ -1,12 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import Home from './src/screen/Home'
+import { SafeAreaView, StyleSheet, View, Platform } from 'react-native';
+import Navigator from './src/navigation/Navigator'
+import { colors } from './src/constants/colors'
+import { Provider } from 'react-redux';
+import store from './src/store'
 
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-        <Home />
+        <Provider store={store}>
+          <Navigator />
+        </Provider>
         <StatusBar style={styles.statusBar} />
     </SafeAreaView>
   );
@@ -15,9 +20,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: colors.teal200,
   },
   statusBar: {
     backgroundColor: 'red',

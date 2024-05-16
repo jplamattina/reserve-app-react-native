@@ -4,7 +4,7 @@ import categories from '../data/categories.json'
 import ProductItem from '../components/ProductItem'
 import React from 'react'
 
-const favoriteListCategory = () => {
+const FavoriteListCategory = () => {
   return (
     <View style={styles.flatListContainer}>
       <FlatList 
@@ -16,7 +16,7 @@ const favoriteListCategory = () => {
   )
 }
 
-export default favoriteListCategory
+export default FavoriteListCategory
 
 const styles = StyleSheet.create({
     flatListContainer: {

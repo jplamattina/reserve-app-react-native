@@ -1,8 +1,8 @@
-import { StyleSheet, View, Text } from 'react-native'
 import React from 'react'
+import { StyleSheet, View } from 'react-native'
 import { colors } from '../../constants/colors'
 
-const Card = ({children, style}) => {
+const ItemCard = ({children, style}) => {
   return (
     <View style={{...styles.container, ...style}}>
         {children}
@@ -10,26 +10,22 @@ const Card = ({children, style}) => {
   )
 }
 
-export default Card
+export default ItemCard
 
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: colors.teal600,
-        width: 90,
-        height: 90,
+        backgroundColor: colors.teal200,
+        width: 162,
+        height: 300,
         shadowColor: colors.platinum,
         shadowOffset: {
-          width: 4,
+          width: 10,
           height: 4,
         },
         shadowOpacity: 0.30,
         shadowRadius: 4.65,
         elevation: 4,
-        marginRight: 10,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        
+        borderRadius: 20,     
     }
 })

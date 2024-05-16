@@ -8,7 +8,7 @@ const ProductItem = ({categories}) => {
     <Card
         style={styles.additionalStylesCard}
     >
-      <Text style={styles.textCategory}>{categories.title}</Text>
+      <Text style={styles.textCategory}>{categories}</Text>
       <Image
         resizeMode='cover'
         style={styles.image}
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     additionalStylesCard: {
       paddingLeft: 10,
       flexDirection: 'row',
-      height: 120,
+      height: 12,
       width: 300,
       justifyContent: 'space-between',
       margin: 10,

@@ -4,13 +4,13 @@ import { colors } from '../constants/colors'
 import React from 'react'
 import Header from '../components/Header';
 import Search from '../components/Search'
-import CategorySlider from '../components/Categories/CategorySlider'
-import RecommendedSlider from '../components/Recommend/RecommendSlider'
-import ButtonReservation from '../components/Reservations/ButtonReservation'
-import ButtonNextWorkshop from '../components/NextWorkshop/ButtonNextWorkshop'
-import ButtonMyReservation from '../components/MyReservations/ButtonMyReservations'
+import CategorySlider from '../components/categories/CategorySlider'
+import RecommendedSlider from '../components/recommend/RecommendSlider'
+import ButtonReservation from '../components/reservations/ButtonReservation'
+import ButtonNextWorkshop from '../components/nextWorkshop/ButtonNextWorkshop'
+import ButtonMyReservation from '../components/myReservations/ButtonMyReservations'
 
-const home = () => {
+const Home = () => {
     return (
         <View style = {styles.homeContainer}>
               <View style = {styles.headerContainer}>
@@ -40,7 +40,7 @@ const home = () => {
       )
 }
 
-export default home
+export default Home
 
 const styles = StyleSheet.create({
     homeContainer: {

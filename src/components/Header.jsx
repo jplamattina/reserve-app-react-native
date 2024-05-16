@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     container:{
         height: 100,
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: colors.teal200,
     },
     leftSideContainer: {
         width: '50%',

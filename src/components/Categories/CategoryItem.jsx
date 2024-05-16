@@ -1,16 +1,17 @@
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native"
-import React from "react"
+import React, { useState } from "react"
 import { colors } from "../../constants/colors"
 import Card from "./Card"
 
-const CategoryItem = ({ category, navigation }) => {
+const CategoryItem = ({ category, navigation, setSelectedCategory }) => {
+  //()=>navigation.navigate('ItemListCategory', {category})
   return (
     <View style={styles.container}>
-        <Card style={styles.card}>
-            <Pressable onPress={()=>navigation.navigate('ItemListCategory', {category})}>
-                {/* <Text style={styles.text}>{category}</Text> */}
+            <Pressable onPress={() => setSelectedCategory(category)}>
+              <Card style={styles.card}>
+                      {/* <Text style={styles.text}>{category}</Text> */}
+              </Card>
             </Pressable>
-        </Card>
         <View>
             <Text>{category}</Text>
         </View>
