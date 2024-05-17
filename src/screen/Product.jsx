@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, Pressable, ScrollView, Animated, FlatList} from 'react-native'
 import { colors } from '../constants/colors'
 import tallerV3d from './../../assets/tallerv3d.jpg'
 import products from './../data/products.json'
 import { useDispatch, useSelector } from 'react-redux'
-import { increment } from '../features/counter/counterSlice'
+import { increment, decrement } from '../features/counter/counterSlice'
 
 const { height, width } = Dimensions.get("window")
 const Product = ({ route }) => {
@@ -13,11 +13,10 @@ const Product = ({ route }) => {
     // const setHeight = (h) => (height / 100) * h;
     // const setWidth = (w) => (width / 100) * w;
 
-    console.log('count', count)
     const { productId } = route.params;
+    console.log('route: ', route)
 
     const selectedProduct = products.find(product => product.id === productId);
-    console.log('selectedProduct', selectedProduct)
   return (
     <View style={styles.productContainer}>
         <View style={styles.imageContainer}>
@@ -35,23 +34,35 @@ const Product = ({ route }) => {
         <View style={styles.descriptionContainer}>
             <View style={styles.descRatingContainer}>
                 <View style={styles.titleDescription}>
-                    <Text style={styles.title}>{selectedProduct.title}</Text>
-                  
-                </View>
-                <View style={styles.rating}>
-                    <Text>Estrellas</Text>
+                    <View>
+                        <Text style={styles.title}>{selectedProduct.title}</Text>
+                        <Text style={styles.description}>{selectedProduct.category}</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.rating}>Estrellas</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.descriptionProduct}>
-                <Text style={styles.description}>{selectedProduct.description}</Text>
+                {/* <Text style={styles.description}>Description</Text>
+                <Text style={styles.description}>{selectedProduct.description}</Text> */}
+                <Pressable style={styles.minButton} onPress={()=> dispatch(decrement())}>
+                    <Text style={styles.textIcon}>-</Text>
+                </Pressable>
+                <View>
+                    <Text style={styles.textCount}>{count}</Text>
+                </View>
+                <Pressable style={styles.maxButton} onPress={()=> dispatch(increment())}>
+                    <Text style={styles.textIcon}>+</Text>
+                </Pressable>
             </View>
             <View style={styles.storeContainer}>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceTitle}>${selectedProduct.price}</Text>
                 </View>
                 <View style={styles.buttonAddCart}>
-                    <Pressable style={styles.buttonCart} onPress={() => dispatch(increment())}>
-                        <Text style={styles.cartTitle}>Agregar al Carrito {count}</Text>
+                    <Pressable style={styles.buttonCart} onPress={()=> dispatch(increment())}>
+                        <Text style={styles.cartTitle}>Agregar al Carrito</Text>
                     </Pressable>
                 </View>
             </View>
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     }, 
     imageContainer: {
         width: '100%',
-        height: '50%',
+        height: '60%',
         position: 'relative',
     },
     image: {
@@ -80,24 +91,16 @@ const styles = StyleSheet.create({
     },
     dotsImages: {
         width: '100%',
-        position: 'absolute',
-        bottom: 90,
         height: 20,
-        backgroundColor: 'red',
+        backgroundColor: 'violet',
         display: 'flex',
         justifyContent: 'center', 
         alignItems: 'center',
+        bottom: 30,
     },
     descriptionContainer: {
         width: '100%',
-        height: '50%',
-        flex: 1,
-        backgroundColor: 'darkviolet',
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
-        position: 'absolute',
-        top: '40%',
-        zIndex: 1,
+        height: '40%',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -107,20 +110,22 @@ const styles = StyleSheet.create({
     },
     descRatingContainer: {
         width: '100%',
-        height: '40%',
+        height: '30%',
         flexDirection: 'row',
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignContent: 'center',
     },
     titleDescription: {
-        width: '50%',
+        width: '100%',
         height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        padding: 10,
     },
     rating: {
-        width: '50%',
-        height: '40%',
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginTop: 6,
     },
     storeContainer: {
         width: '100%',
@@ -132,7 +137,8 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: 'red',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-start',
+        padding: 10,
     },
     buttonAddCart: {
         width: '50%',
@@ -153,13 +159,17 @@ const styles = StyleSheet.create({
         marginRight: 20,
     },
     descriptionProduct: {
-        width: '90%',
-        height: '20%',
-        // padding: 20,
-        backgroundColor: 'green'
+        width: '50%',
+        height: '30%',
+        padding: 10,
+        backgroundColor: 'green',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        textAlign: 'center',
+        alignItems: 'center',
     },
     title: {
-        fontSize: 35,
+        fontSize: 20,
         color: colors.teal900,
         fontWeight: 'bold'
     },
@@ -176,5 +186,28 @@ const styles = StyleSheet.create({
     cartTitle: {
         fontSize: 20,
         color: colors.teal200
+    },
+    minButton: {
+        width: 55,
+        height: 55,
+        backgroundColor: colors.teal600,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+    },
+        maxButton: {
+        width: 55,
+        height: 55,
+        backgroundColor: colors.teal600,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+    },
+    textIcon: {
+        fontSize: 25,
+    },
+    textCount: {
+        fontSize: 40,
+        color: colors.teal400
     }
 })

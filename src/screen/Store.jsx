@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { colors } from '../constants/colors'
 // import favoriteCategories from '../data/favoriteCategories.json'
 import Search from '../components/Search'
@@ -51,7 +51,6 @@ const Store = ({
   // }, [keyWord])
 
   useEffect(() => {
-    console.log(selectedCategory, 'selectedCategory')
     const productsPrefiltered = products.filter(product => product.category.includes(selectedCategory?.toString()))
     const sortedData = productsPrefiltered.sort((a, b) => a.title.localeCompare(b.title));
     if(selectedCategory == 'Todos') {
@@ -72,12 +71,12 @@ const Store = ({
                 <CategorySlider setSelectedCategory={setSelectedCategory}/>
             </View>
             <Text>Productos destacados</Text>
-            <View style={styles.recommendedCategoryContainer}>
+            <Pressable style={styles.recommendedCategoryContainer}>
                 <ProductSection 
                     filteredProduct={productsFiltered}
                     navigation={navigation}
                     />
-            </View>
+            </Pressable>
         </View>
       )
 }
@@ -100,6 +99,6 @@ const styles = StyleSheet.create({
     },
     recommendedCategoryContainer: {
       width: '100%',
-      height: 400,
+      height: '100%',
     },
   })

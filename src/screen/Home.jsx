@@ -13,9 +13,9 @@ import ButtonMyReservation from '../components/myReservations/ButtonMyReservatio
 const Home = () => {
     return (
         <View style = {styles.homeContainer}>
-              <View style = {styles.headerContainer}>
+              {/* <View style = {styles.headerContainer}>
                 <Header title={'Hi Jota! 👋'} description={'Reserver your Activity'} />
-              </View>
+              </View> */}
               <View>
                   <ButtonReservation />
               </View>
