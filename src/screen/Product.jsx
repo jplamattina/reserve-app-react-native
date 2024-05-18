@@ -14,7 +14,6 @@ const Product = ({ route }) => {
     // const setWidth = (w) => (width / 100) * w;
 
     const { productId } = route.params;
-    console.log('route: ', route)
 
     const selectedProduct = products.find(product => product.id === productId);
   return (
@@ -44,8 +43,6 @@ const Product = ({ route }) => {
                 </View>
             </View>
             <View style={styles.descriptionProduct}>
-                {/* <Text style={styles.description}>Description</Text>
-                <Text style={styles.description}>{selectedProduct.description}</Text> */}
                 <Pressable style={styles.minButton} onPress={()=> dispatch(decrement())}>
                     <Text style={styles.textIcon}>-</Text>
                 </Pressable>
@@ -188,16 +185,16 @@ const styles = StyleSheet.create({
         color: colors.teal200
     },
     minButton: {
-        width: 55,
-        height: 55,
+        width: 44,
+        height: 44,
         backgroundColor: colors.teal600,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
     },
         maxButton: {
-        width: 55,
-        height: 55,
+        width: 44,
+        height: 44,
         backgroundColor: colors.teal600,
         justifyContent: 'center',
         alignItems: 'center',

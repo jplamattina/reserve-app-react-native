@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import StoreProductItem from './StoreProductItem'
-import products from './../../data/products.json'
 
 const ProductSection = ({filteredProduct, navigation, setSelectedProduct}) => {
   return (
@@ -24,11 +23,12 @@ export default ProductSection
 const styles = StyleSheet.create({
   productSectionContainer: {
     width: '100%',
-    height: '100%',
-    flex: 1,
+    height: '72%',
+    backgroundColor: 'red'
     },
   productContainer:{
     width: '100%',
     height: '100%',
+    
   }
 })

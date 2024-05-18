@@ -14,6 +14,7 @@ const Tab = createBottomTabNavigator()
 const BottomTabNavigator = () => {
   return (
         <Tab.Navigator
+            initialRouteName='Home'
             screenOptions={({ route }) => ({             
                 // header: route.name === 'Home' ? 
                 // () => {return <Header title="Welcome" description="Reserve your Activity" />} :
@@ -41,7 +42,8 @@ const BottomTabNavigator = () => {
                 }}
             />
             <Tab.Screen
-                name='Home'
+
+                name='Home'r
                 component={HomeStackNavigator}
                 options={{
                     tabBarIcon: ({ focused }) => {

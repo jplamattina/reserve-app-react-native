@@ -54,20 +54,18 @@ const WorkshopCompany = ({titleCompany, navigation}) => {
                 </ItemCard>
                 <ItemCard style={styles.cardRight}>
                     <Pressable
-                                onPress={() => navigation.navigate('Store')}
-                            >
-                    <Image
-                        resizeMode='cover'
-                        style={styles.image}
-                        source={tienda}
-                    />
-                    <View style={styles.overlayContent}>
-
+                        onPress={() => navigation.navigate('Store')}
+                    >
+                        <Image
+                            resizeMode='cover'
+                            style={styles.image}
+                            source={tienda}
+                        />
+                        <View style={styles.overlayContent}>
                             <View style={styles.reservationCard}>
                                 <Text style={styles.shopCardTitleText}>TIENDA</Text>
                             </View>
-
-                    </View>           
+                        </View>           
                     </Pressable>
                 </ItemCard>
             </View>

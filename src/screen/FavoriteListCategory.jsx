@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { colors } from '../constants/colors'
-import categories from '../data/categories.json'
+// import categories from '../data/categories.json'
 import ProductItem from '../components/ProductItem'
 import React from 'react'
 

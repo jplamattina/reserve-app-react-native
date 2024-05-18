@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
     homeContainer: {
       width: '100%',
       height: '100%',
-      // justifyContent: 'center',
-      backgroundColor: colors.teal00,
+      backgroundColor: colors.teal200,
     },
     headerContainer:{
     },

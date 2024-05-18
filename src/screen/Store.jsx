@@ -6,77 +6,62 @@ import Search from '../components/Search'
 import CategorySlider from '../components/categories/CategorySlider'
 import ProductSection from '../components/storeProducts/ProductSection'
 import products from './../data/products.json'
+import { useGetProductsQuery, useGetProductsByCategoryQuery } from '../services/shopService'
 
-const Store = ({
-  setCategorySelected = () => {},
-  navigation,
-  route
-}) => {
+const Store = ({navigation}) => {
 
   const [keyWord, setKeyword] = useState("")
   const [productsFiltered, setProductsFiltered] = useState([])
   const [selectedCategory, setSelectedCategory] = useState([])
-  const [error, setError] = useState("")
-  // const {category: categorySelected} = route.params
+  const [errorSearching, setErrorSearching] = useState("")
 
-  // useEffect(()=> {
-  //   //Products filtered by category
-  //   regex= /\d/
-  //   const hasDigits = (regex.test(keyWord))
-  //   console.log(hasDigits);
-  //   if (hasDigits) {
-  //     setError("Don't use digits")
-  //     return
+  const { data: productsByCategory, error, isLoading} = useGetProductsByCategoryQuery(selectedCategory)
+  const { data: allProducts, errorProducts, isLoadingProducts} = useGetProductsQuery()
+  
+
+  // useEffect(() => {
+  //   const productsPrefiltered = products.filter(product => product.category.includes(selectedCategory?.toString()))
+  //   const sortedData = productsPrefiltered?.sort((a, b) => a.title.localeCompare(b.title));
+  //   if(selectedCategory == 'Todos') {
+  //     setProductsFiltered(products.sort((a, b) => a.title.localeCompare(b.title)))
+  //   } else {
+  //     setProductsFiltered(sortedData)
   //   }
-  //   console.log(products,' asd')
-  //   const productsPrefiltered = products.filter(product => product.category === categorySelected)
-  //   setProductsFiltered(productsPrefiltered)
-  //   //Product filtered by name
-  //   const productsFilter = productsPrefiltered.filter(product => product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase()))
-  //   setProductsFiltered(productsFilter)
-  //   setError("")
-  // }, [keyWord, categorySelected])
-
-  //  useEffect(() => {
-  //   //Products filtered by category
-  //   regex= /\d/
-  //   const hasDigits = (regex.test(keyWord))
-  //   if (hasDigits) {
-  //     setError("Don't use digits")
-  //     return
-  //   }
-  //   console.log(selectedCategory, 'selectedCategory')
-  //   const productsPrefiltered = products.filter(product => product.category === selectedCategory?.toString())
-  //   setProductsFiltered(productsPrefiltered)
-  // }, [keyWord])
-
+  // }, [selectedCategory])
+  
   useEffect(() => {
-    const productsPrefiltered = products.filter(product => product.category.includes(selectedCategory?.toString()))
-    const sortedData = productsPrefiltered.sort((a, b) => a.title.localeCompare(b.title));
-    if(selectedCategory == 'Todos') {
-      setProductsFiltered(products.sort((a, b) => a.title.localeCompare(b.title)))
-    } else {
-      setProductsFiltered(sortedData)
+    if (!isLoading && !isLoadingProducts) {
+      if(productsByCategory == '') {
+        setProductsFiltered(allProducts)
+        setErrorSearching("")
+      } else {
+        const productsFilter = productsByCategory.filter((product) =>
+        product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase()))
+        setProductsFiltered(productsFilter)
+        setErrorSearching("")
     }
-  }, [selectedCategory])
+    }
+  
+  }, [productsByCategory])
+
 
 
     return (
         <View style = {styles.storeContainer}>
               <View style = {styles.SearchSection}>
-                <Search error = {error} onSearch={setKeyword} goBack={()=> navigation.goBack()}/>
+                <Search error = {errorSearching} onSearch={setKeyword} goBack={()=> navigation.goBack()}/>
               </View>
             <Text>Categorias</Text>
-            <View style={styles.categoryContainer}>
-                <CategorySlider setSelectedCategory={setSelectedCategory}/>
-            </View>
+              <View style={styles.categoryContainer}>
+                  <CategorySlider setSelectedCategory={setSelectedCategory}/>
+              </View>
             <Text>Productos destacados</Text>
-            <Pressable style={styles.recommendedCategoryContainer}>
-                <ProductSection 
-                    filteredProduct={productsFiltered}
-                    navigation={navigation}
-                    />
-            </Pressable>
+              <Pressable style={styles.recommendedCategoryContainer}>
+                  <ProductSection 
+                      filteredProduct={productsFiltered}
+                      navigation={navigation}
+                      />
+              </Pressable>
         </View>
       )
 }
