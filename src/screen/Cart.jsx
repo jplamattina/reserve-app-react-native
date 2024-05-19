@@ -2,9 +2,11 @@ import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import CartItem from '../components/cart/CarItem'
 import { colors } from './../constants/colors'
-import CartData from './../data/cartData.json'
+import { useSelector } from "react-redux"
+// import CartData from './../data/cartData.json'
 
 const Cart = () => {
+  const { items: CartData, total } = useSelector(state => state.cart.value)
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -28,7 +30,7 @@ const Cart = () => {
       <View style={styles.totalContainer}>
           <View style={styles.productContainer}>
             <Text>Producto</Text>
-            <Text>$ 4.500</Text>
+            <Text>$ {total}</Text>
          </View>
          <View style={styles.productContainer}>
             <Text>Descuento</Text>
@@ -37,7 +39,7 @@ const Cart = () => {
          <View style={{ height: 1, backgroundColor: colors.teal400 }} />
          <View style={styles.productContainer}>
             <Text>Total</Text>
-            <Text>$ 4.000</Text>
+            <Text>$ {total}</Text>
          </View>
       </View>
     </View>

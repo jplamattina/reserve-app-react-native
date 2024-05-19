@@ -11,7 +11,7 @@ export const shopAPI = createApi({
             query: () => `products.json`,
             transformResponse: (response) => {
                 const responseTransformed = Object.values(response)
-                return responseTransformed
+                return responseTransformed.sort((a, b) => a.title.localeCompare(b.title))
             }
         }),
         getProductsByCategory: builder.query({
@@ -25,7 +25,8 @@ export const shopAPI = createApi({
             query: (productId) => `products.json?orderBy="id"&equalTo=${productId}`,
             transformResponse: (response) => {
                 const responseTransformed = Object.values(response)
-                return responseTransformed.length ? responseTransformed[0] : null
+                if (responseTransformed.length) return responseTransformed[0]
+                return null
             }
         }),
     })

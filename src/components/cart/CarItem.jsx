@@ -4,7 +4,7 @@ import { colors } from '../../constants/colors'
 import { FontAwesome   } from "@expo/vector-icons";
 import cartData from './../../data/cartData.json'
 
-const CartItem = () => {
+const CartItem = ({ cartItem }) => {
     return (
         <View style={styles.card}>
             <View>
@@ -15,15 +15,15 @@ const CartItem = () => {
             />
             </View>
             <View style={styles.textContainer}>
-                <Text style={styles.text}>asd</Text>
-                <Text style={styles.text2}>pepe</Text>
-                <Text style={styles.textNumber}>$4500</Text>
+                <Text style={styles.text}>{cartItem.title}</Text>
+                <Text style={styles.text2}>{cartItem.brand}</Text>
+                <Text style={styles.textNumber}>{cartItem.price}</Text>
             </View>
             <View style={styles.buttonCountContainer}>
                 <View style={styles.minContainer}>
                     <Text style={styles.text3}>-</Text>
                 </View>
-                <Text style={styles.textCount}>2</Text>
+                <Text style={styles.textCount}>{cartItem.quantity}</Text>
                 <View style={styles.maxContainer}>
                     <Text style={styles.text3}>+</Text>
                 </View>

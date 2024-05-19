@@ -17,20 +17,10 @@ const Store = ({navigation}) => {
 
   const { data: productsByCategory, error, isLoading} = useGetProductsByCategoryQuery(selectedCategory)
   const { data: allProducts, errorProducts, isLoadingProducts} = useGetProductsQuery()
-  
 
-  // useEffect(() => {
-  //   const productsPrefiltered = products.filter(product => product.category.includes(selectedCategory?.toString()))
-  //   const sortedData = productsPrefiltered?.sort((a, b) => a.title.localeCompare(b.title));
-  //   if(selectedCategory == 'Todos') {
-  //     setProductsFiltered(products.sort((a, b) => a.title.localeCompare(b.title)))
-  //   } else {
-  //     setProductsFiltered(sortedData)
-  //   }
-  // }, [selectedCategory])
-  
   useEffect(() => {
     if (!isLoading && !isLoadingProducts) {
+
       if(productsByCategory == '') {
         setProductsFiltered(allProducts)
         setErrorSearching("")
@@ -42,7 +32,7 @@ const Store = ({navigation}) => {
     }
     }
   
-  }, [productsByCategory])
+  }, [productsByCategory, allProducts, isLoadingProducts])
 
 
 

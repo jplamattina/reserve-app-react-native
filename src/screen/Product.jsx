@@ -1,70 +1,79 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, Dimensions, Image, Pressable, ScrollView, Animated, FlatList} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Dimensions, Image, Pressable, ScrollView, Animated, FlatList, Button} from 'react-native'
 import { colors } from '../constants/colors'
-import tallerV3d from './../../assets/tallerv3d.jpg'
-import products from './../data/products.json'
 import { useDispatch, useSelector } from 'react-redux'
 import { increment, decrement } from '../features/counter/counterSlice'
+import { useGetProductByIdQuery } from '../services/shopService'
+import { addCartItem } from '../features/counter/cartSlice'
 
-const { height, width } = Dimensions.get("window")
 const Product = ({ route }) => {
     const count = useSelector(state => state.counter.value)
     const dispatch = useDispatch()
-    // const setHeight = (h) => (height / 100) * h;
-    // const setWidth = (w) => (width / 100) * w;
 
     const { productId } = route.params;
-
-    const selectedProduct = products.find(product => product.id === productId);
+   
+    const { data: productById, error, isLoading } = useGetProductByIdQuery(productId)
+  
+    //necesito manejar mejor el tema del count- Cuando ingreso a otr producto no resetea el count
+    // tambien el max count tiene que ser segun el stock
+    const handleAddCart = () => {
+        dispatch(addCartItem({...productById, quantity: count}))
+    }
+   
   return (
     <View style={styles.productContainer}>
-        <View style={styles.imageContainer}>
-            <Image
-                resizeMode='cover'
-                style={styles.image}
-                source={{uri: selectedProduct.images[0]}}
-            />
-            <View>
-                <View style={styles.dotsImages}>
-                    <Text> asdasdsadasdsa</Text>
-                </View>
-            </View>
-        </View>
-        <View style={styles.descriptionContainer}>
-            <View style={styles.descRatingContainer}>
-                <View style={styles.titleDescription}>
-                    <View>
-                        <Text style={styles.title}>{selectedProduct.title}</Text>
-                        <Text style={styles.description}>{selectedProduct.category}</Text>
-                    </View>
-                    <View>
-                        <Text style={styles.rating}>Estrellas</Text>
+        {productById ? (
+            <>
+                <View style={styles.imageContainer}>
+                    <Image
+                        resizeMode='cover'
+                        style={styles.image}
+                        source={{ uri: productById.images[0] }}
+                    />
+                    <View style={styles.dotsImages}>
+                        <Text> asdasdsadasdsa</Text>
                     </View>
                 </View>
-            </View>
-            <View style={styles.descriptionProduct}>
-                <Pressable style={styles.minButton} onPress={()=> dispatch(decrement())}>
-                    <Text style={styles.textIcon}>-</Text>
-                </Pressable>
-                <View>
-                    <Text style={styles.textCount}>{count}</Text>
+                <View style={styles.descriptionContainer}>
+                    <View style={styles.descRatingContainer}>
+                        <View style={styles.titleDescription}>
+                            <View>
+                                <Text style={styles.title}>{productById.title}</Text>
+                                <Text style={styles.description}>{productById.category}</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.rating}>Estrellas</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.descriptionProduct}>
+                        <Pressable style={styles.minButton} onPress={() => dispatch(decrement())}>
+                            <Text style={styles.textIcon}>-</Text>
+                        </Pressable>
+                        <View>
+                            <Text style={styles.textCount}>{count}</Text>
+                        </View>
+                        <Pressable style={styles.maxButton} onPress={() => dispatch(increment())}>
+                            <Text style={styles.textIcon}>+</Text>
+                        </Pressable>
+                    </View>
+                    <View style={styles.storeContainer}>
+                        <View style={styles.priceContainer}>
+                            <Text style={styles.priceTitle}>${productById.price}</Text>
+                        </View>
+                        <View style={styles.buttonAddCart}>
+                            <Pressable style={styles.buttonCart} onPress={handleAddCart}>
+                                <Text style={styles.cartTitle}>Agregar al Carrito</Text>
+                            </Pressable>
+                            {/* <Button  style={styles.buttonCart} title='AGREGAR AL CARRITO' onPress={() => dispatch(addCartItem(productById))}></Button> */}
+                        </View>
+                    </View>
                 </View>
-                <Pressable style={styles.maxButton} onPress={()=> dispatch(increment())}>
-                    <Text style={styles.textIcon}>+</Text>
-                </Pressable>
-            </View>
-            <View style={styles.storeContainer}>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceTitle}>${selectedProduct.price}</Text>
-                </View>
-                <View style={styles.buttonAddCart}>
-                    <Pressable style={styles.buttonCart} onPress={()=> dispatch(increment())}>
-                        <Text style={styles.cartTitle}>Agregar al Carrito</Text>
-                    </Pressable>
-                </View>
-            </View>
-        </View>
-    </View>
+            </>
+        ) : (
+            isLoading ? <Text>Loading...</Text> : <Text>Error: {error}</Text>
+        )}
+</View>
   )
 }
 

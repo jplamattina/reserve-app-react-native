@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 
 const StoreProductItem = ({products, navigation}) => {
   
+
   return (
     <View style={styles.storeProductContainer}>
         <Pressable onPress={() => { navigation.navigate('Product', { productId: products.id })}}>
