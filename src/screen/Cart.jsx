@@ -1,12 +1,20 @@
 import React from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native'
 import CartItem from '../components/cart/CarItem'
 import { colors } from './../constants/colors'
 import { useSelector } from "react-redux"
+import { usePostOrderMutation } from '../services/shopService'
 // import CartData from './../data/cartData.json'
 
 const Cart = () => {
   const { items: CartData, total } = useSelector(state => state.cart.value)
+  const [triggerPostOrder, result] = usePostOrderMutation()
+
+  const onConfirmOrder = () => {
+    triggerPostOrder({items: CartData, user: 'Juan Pablo', total})
+  }
+
+  console.log('resultado::>', result);
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -40,6 +48,11 @@ const Cart = () => {
          <View style={styles.productContainer}>
             <Text>Total</Text>
             <Text>$ {total}</Text>
+         </View>
+         <View style={styles.buttonContainer}>
+            <Pressable style={styles.confirmButton} onPress={onConfirmOrder}>
+                   <Text style={styles.textConfirmOrder}>CONFIRM ORDER</Text>
+            </Pressable>
          </View>
       </View>
     </View>
@@ -80,8 +93,31 @@ const styles = StyleSheet.create({
   productContainer: {
     width: '100%',
     height: '20%',
-    backgroundColor: 'green',
+    // backgroundColor: 'green',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  buttonContainer: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    flex: 1
+   },
+  confirmButton: {
+    width: '90%',
+    height: '80%',
+    backgroundColor: colors.teal600,
+    justifyContent: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  textConfirmOrder: {
+    fontSize: 18,
+    fontWeight: 'bold'
   }
 })

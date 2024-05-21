@@ -29,7 +29,14 @@ export const shopAPI = createApi({
                 return null
             }
         }),
+        postOrder: builder.mutation({
+            query: ({...order}) => ({
+                url: 'order.json',
+                method: 'POST',
+                body: order
+            })
+        })
     })
 })
 
-export const {useGetCategoriesQuery, useGetProductByIdQuery, useGetProductsByCategoryQuery, useGetProductsQuery} = shopAPI
+export const {useGetCategoriesQuery, useGetProductByIdQuery, useGetProductsByCategoryQuery, useGetProductsQuery, usePostOrderMutation} = shopAPI
