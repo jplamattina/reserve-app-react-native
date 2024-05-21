@@ -14,8 +14,8 @@ const HomeStackNavigator = () => {
         <Stack.Navigator
             initialRouteName='Workshop'
             /*se puede agregar un ternario para renderizar distintos headers*/
-            // screenOptions = {() => ({ header: () => {return <Header title={'Hi Jota! 👋'} description={'Reserver your Activity'} />}})}
-            screenOptions={{ headerShown: false,}}
+            screenOptions = {() => ({ header: () => {return <Header title={'Hi Jota! 👋'} description={'Reserver your Activity'} />}})}
+            // screenOptions={{ headerShown: false,}}
         >
                 <Stack.Screen
                     component={Workshop}

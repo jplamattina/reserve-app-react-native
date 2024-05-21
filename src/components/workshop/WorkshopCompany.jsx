@@ -1,11 +1,13 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import ItemCard from './itemCard'
-import tienda from '../../../assets/tienda.jpg'
 import handsClay from '../../../assets/handsClay.jpg'
 import { colors } from '../../constants/colors'
 
 const WorkshopCompany = ({titleCompany, navigation}) => {
+
+    const tienda = '../../../assets/tienda.jpg'
+    const handsClay = '../../../assets/handsClay.jpg'
   return (
     <View>
         <View style={styles.workshopTitleContainer}>
@@ -22,7 +24,7 @@ const WorkshopCompany = ({titleCompany, navigation}) => {
                         <Image
                             resizeMode='cover'
                             style={styles.image}
-                            source={handsClay}
+                            source={require(handsClay)}
                         />
                         <View style={styles.overlayContent}>
                             <View style={styles.reservationCard}>
@@ -59,7 +61,7 @@ const WorkshopCompany = ({titleCompany, navigation}) => {
                         <Image
                             resizeMode='cover'
                             style={styles.image}
-                            source={tienda}
+                            source={require(tienda)}
                         />
                         <View style={styles.overlayContent}>
                             <View style={styles.reservationCard}>

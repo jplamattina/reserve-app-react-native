@@ -20,6 +20,7 @@ const LoginScreen = ({ navigation }) => {
                 setUser({
                     email: result.data.email,
                     idToken: result.data.idToken,
+                    localId: result.data.localId
                 })
             )
         }
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 22,
-        fontFamily: "Josefin",
+        // fontFamily: "Josefin",
     },
     sub: {
         fontSize: 14,

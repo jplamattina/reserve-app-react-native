@@ -3,6 +3,7 @@ import { baseURL } from "../databases/realTimeDatabase";
 
 export const shopAPI = createApi({
     baseQuery: fetchBaseQuery({baseUrl: baseURL}),
+    tagTypes: ['profileImageGet'],
     endpoints: (builder) => ({
         getCategories: builder.query({
             query: () => `productCategories.json`
@@ -35,8 +36,30 @@ export const shopAPI = createApi({
                 method: 'POST',
                 body: order
             })
-        })
+        }),
+        getProfileImage: builder.query({
+            query: (localId) => `profileImages/${localId}.json`,
+            providesTags: ['profileImageGet']
+        }),
+        //We make a PUT request for not creating additional key, because de localId is already an unique key.
+        postProfileImage: builder.mutation({
+            query: ({image, localId}) => ({
+                url: `profileImages/${localId}.json`,
+                method: "PUT",
+                body: {
+                    image: image
+                },
+            }),
+            invalidatesTags: ['profileImageGet'] //Invalidates will trigger a refetch on profileImageGet
+        }),
     })
 })
 
-export const {useGetCategoriesQuery, useGetProductByIdQuery, useGetProductsByCategoryQuery, useGetProductsQuery, usePostOrderMutation} = shopAPI
+export const {
+    useGetCategoriesQuery, 
+    useGetProductByIdQuery, 
+    useGetProductsByCategoryQuery, 
+    useGetProductsQuery, 
+    usePostOrderMutation, 
+    useGetProfileImageQuery, 
+    usePostProfileImageMutation} = shopAPI

@@ -5,9 +5,10 @@ import { colors } from './../constants/colors'
 import Workshop from '../screen/Workshop';
 import Store from '../screen/Store';
 import Header from './../components/Header'
-import { FontAwesome5, Entypo, AntDesign } from "@expo/vector-icons"
+import { FontAwesome5, Entypo, AntDesign, FontAwesome } from "@expo/vector-icons"
 import HomeStackNavigator from './HomeStackNavigator';
 import CartStack from './CartStackNavigator';
+import MyProfileStackNavigator from './MyprofileStackNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -41,8 +42,24 @@ const BottomTabNavigator = () => {
                     },
                 }}
             />
+             <Tab.Screen
+                name='MyProfile'
+                component={MyProfileStackNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <FontAwesome 
+                                    name="user-circle"
+                                    size={32}
+                                    color={focused ? colors.teal600 : colors.teal400}
+                                />
+                            </View>
+                        )
+                    },
+                }}
+            />
             <Tab.Screen
-
                 name='Home'r
                 component={HomeStackNavigator}
                 options={{

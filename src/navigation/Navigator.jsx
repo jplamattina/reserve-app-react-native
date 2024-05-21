@@ -14,6 +14,7 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
 
   const {user} = useSelector(state => state.auth.value)
+  console.log('user', user);
   return (
     <NavigationContainer>
         {user ? <BottomTabNavigator /> :<AuthStackNavigator />}
