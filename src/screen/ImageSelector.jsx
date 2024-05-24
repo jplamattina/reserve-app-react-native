@@ -14,8 +14,6 @@ const ImageSelector = ({navigation}) => {
     const [triggerSaveImage, result] = usePostProfileImageMutation()
     const {localId} = useSelector(state => state.auth.value)
 
-    console.log('localID:', localId);
-
     const verifyCameraPermissions = async () => {
         const {granted} = await ImagePicker.requestCameraPermissionsAsync();
         return granted;

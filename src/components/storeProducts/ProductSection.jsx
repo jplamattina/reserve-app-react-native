@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import StoreProductItem from './StoreProductItem'
 
-const ProductSection = ({filteredProduct, navigation, setSelectedProduct}) => {
+const ProductSection = ({filteredProduct, navigation}) => {
   return (
     <View style={styles.productSectionContainer}>
       <View style={styles.productContainer}>

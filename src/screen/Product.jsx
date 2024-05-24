@@ -11,11 +11,8 @@ const Product = ({ route }) => {
     const dispatch = useDispatch()
 
     const { productId } = route.params;
-   
     const { data: productById, error, isLoading } = useGetProductByIdQuery(productId)
   
-    //necesito manejar mejor el tema del count- Cuando ingreso a otr producto no resetea el count
-    // tambien el max count tiene que ser segun el stock
     const handleAddCart = () => {
         dispatch(addCartItem({...productById, quantity: count}))
     }
@@ -31,7 +28,7 @@ const Product = ({ route }) => {
                         source={{ uri: productById.images[0] }}
                     />
                     <View style={styles.dotsImages}>
-                        <Text> asdasdsadasdsa</Text>
+                        <Text> ...</Text>
                     </View>
                 </View>
                 <View style={styles.descriptionContainer}>

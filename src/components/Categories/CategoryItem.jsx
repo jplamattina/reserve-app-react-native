@@ -3,8 +3,7 @@ import React, { useState } from "react"
 import { colors } from "../../constants/colors"
 import Card from "./Card"
 
-const CategoryItem = ({ category, navigation, setSelectedCategory }) => {
-  //()=>navigation.navigate('ItemListCategory', {category})
+const CategoryItem = ({ category, setSelectedCategory }) => {
   return (
     <View style={styles.container}>
             <Pressable onPress={() => setSelectedCategory(category)}>

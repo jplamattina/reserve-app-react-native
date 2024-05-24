@@ -6,6 +6,7 @@ import SubmitButton from "../components/auth/SubmitButton"
 import { useSignInMutation } from "../services/authService"
 import { setUser } from "./../features/user/userSlice"
 import { useDispatch } from "react-redux"
+import { insertSession } from "../persistence/index"
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState()
@@ -15,14 +16,26 @@ const LoginScreen = ({ navigation }) => {
     const [triggerSignIn, result] = useSignInMutation('Signup')
 
     useEffect(() => {
-        if (result.isSuccess) {
-            dispatch(
-                setUser({
-                    email: result.data.email,
-                    idToken: result.data.idToken,
-                    localId: result.data.localId
+        if (result?.data && result.isSuccess) {
+            
+            insertSession({
+                email: result.data.email,
+                localId: result.data.localId,
+                token: result.data.idToken,
+            })
+                .then(
+                    (response) => {
+                        dispatch(
+                            setUser({
+                                email: result.data.email,
+                                idToken: result.data.idToken,
+                                localId: result.data.localId,
+                            })
+                        )
+                    })
+                .catch((err) => {
+                    console.log(err)
                 })
-            )
         }
     }, [result])
 
@@ -44,9 +57,10 @@ const LoginScreen = ({ navigation }) => {
                     isSecure={true}
                 />
                 <SubmitButton onPress={onSubmit} title="Send" />
-                <Text style={styles.sub}>Not have an account?</Text>
-                <Pressable onPress={() => navigation.navigate("Signup")}>
+                <Text style={styles.sub}>Already have an account?</Text>
+                <Pressable style={styles.sign} onPress={() => navigation.navigate("Signup")}>
                     <Text style={styles.subLink}>Sign up</Text>
+                    <Text style={styles.sub}>instead!</Text>
                 </Pressable>
             </View>
         </View>
@@ -84,4 +98,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "blue",
     },
+    sign: {
+        width: '100%',
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 5,
+    }
 })

@@ -1,22 +1,42 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { colors } from '../constants/colors'
 import React from 'react'
-import imageIcon from './../../assets/tallerv3d.jpg'
+import { useSelector } from 'react-redux'
+import { useGetProfileImageQuery } from '../services/shopService'
 
-const Header = ({title, description}) => {
+const Header = ({navigation, title, user, description}) => {
+
+  const {imageCamera, localId} = useSelector(state => state.auth.value)
+  const { data: imageFromBase } = useGetProfileImageQuery(localId)
+  const defaultImageRoute = "../../assets/images/defaultProfile.png"
+  console.log('navigation', navigation)
+
   return (
     <View style = {styles.container}>
       <View style = {styles.leftSideContainer}>
         <View style = {styles.boxOne}>
-          <Text style = {styles.textName}>{title}</Text>
+          <Text style = {styles.textName}>{title} {user}</Text>
         </View>
         <View style = {styles.boxTwo}>
           <Text style = {styles.textDescription}>{description}</Text>
         </View>
       </View>
-      <View style = {styles.rightSideContainer}>
-          <Image style = {styles.portrait} source={imageIcon}></Image>
-      </View>
+      <Pressable  onPress={()=>navigation.navigate('MyProfile')} style = {styles.rightSideContainer}>
+          {/*<Image style = {styles.portrait} source={imageIcon}></Image>*/}
+          {imageFromBase || imageCamera  ? (
+                <Image
+                    source={{uri: imageFromBase?.image || imageCamera}}
+                    style={styles.portrait}
+                    resizeMode="cover"
+                />
+            ) : (
+                <Image
+                    source={require(defaultImageRoute)}
+                    style={styles.portrait}
+                    resizeMode="cover"
+                />
+            )}
+      </Pressable>
     </View>
   )
 }
@@ -42,17 +62,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         marginLeft: 15,
-        // backgroundColor:'green',
-        // width: '100%',
-        // height: '50%',
     },
     boxTwo:{
         display: 'flex',
         flexDirection: 'column',
         marginLeft: 15,
-        // backgroundColor:'darkviolet',
-        // width: '100%',
-        // height: '50%',
     },
     rightSideContainer: {
         width: '50%',
@@ -64,7 +78,7 @@ const styles = StyleSheet.create({
     },
     textName: {
       color: colors.teal900,
-      fontSize: 21
+      fontSize: 16
     },
     textDescription: {
       color: colors.teal900,

@@ -16,11 +16,11 @@ const BottomTabNavigator = () => {
   return (
         <Tab.Navigator
             initialRouteName='Home'
-            screenOptions={({ route }) => ({             
-                // header: route.name === 'Home' ? 
-                // () => {return <Header title="Welcome" description="Reserve your Activity" />} :
-                // null,
-                headerShown: false,
+            screenOptions={({ route }) => ({         
+                header: (() => {return route.name == 'MyProfile' ? <Header title="Welcome" description="Reserve your Activity" /> : null 
+                || route.name == 'Store' ? <Header title="Hi Jota!" description="Reserve your Activity" /> : null
+                }),
+                headerShown: true,
                 tabBarShowLabel: false,
                 tabBarStyle: styles.tabBar,
             })}

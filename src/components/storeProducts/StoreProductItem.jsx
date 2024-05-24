@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { colors  } from '../../constants/colors'
 import ProductCard from './ProductCard'
-import React, { useState } from 'react'
+import React from 'react'
 
 const StoreProductItem = ({products, navigation}) => {
   

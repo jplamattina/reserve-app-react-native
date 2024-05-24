@@ -14,7 +14,6 @@ const Cart = () => {
     triggerPostOrder({items: CartData, user: 'Juan Pablo', total})
   }
 
-  console.log('resultado::>', result);
   return (
     <View>
       <View style={styles.titleContainer}>

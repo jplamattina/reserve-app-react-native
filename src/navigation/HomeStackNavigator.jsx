@@ -10,12 +10,26 @@ import Header from './../components/Header';
 
 const Stack = createNativeStackNavigator()
 const HomeStackNavigator = () => {
+
+
   return (
         <Stack.Navigator
             initialRouteName='Workshop'
-            /*se puede agregar un ternario para renderizar distintos headers*/
-            screenOptions = {() => ({ header: () => {return <Header title={'Hi Jota! 👋'} description={'Reserver your Activity'} />}})}
-            // screenOptions={{ headerShown: false,}}
+            screenOptions={({ navigation, route }) => ({
+                header: () => {
+                switch (route.name) {
+                    case 'MyProfile':
+                    return <Header navigation={navigation} title="asd" user='coder' description="Reserve your Activity" />;
+                    case 'Store':
+                    return <Header navigation={navigation} title="" user='coder' description="Reserve your Activity" />;
+                    case 'Workshop':
+                    return <Header navigation={navigation} title="User023" user='coder' description="Reserve your Activity" />;
+                    default:
+                    return null;
+                }
+                },
+                headerShown: true,
+            })}
         >
                 <Stack.Screen
                     component={Workshop}

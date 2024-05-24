@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
       width: '100%',
       height: '100%',
       // justifyContent: 'center',
-      backgroundColor: colors.teal00,
+      backgroundColor: colors.teal200,
     },
     SearchSection: {
       alignItems: 'center',
