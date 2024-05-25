@@ -10,10 +10,8 @@ import { initSQLiteDB, truncateSessionsTable } from './src/persistence';
   try {
     await truncateSessionsTable()
     const response = await initSQLiteDB()
-    console.log('response', {responseCreatingDb: response})
-    console.log('db initialized')
   } catch (error) {
-    console.log('error', {errorCreatingDB: error})
+    throw new Error(`Error creating DB: ${error.message}`);
   }
 
 })()

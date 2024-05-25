@@ -1,80 +1,136 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Dimensions, Image, Pressable, ScrollView, Animated, FlatList, Button} from 'react-native'
-import { colors } from '../constants/colors'
-import { useDispatch, useSelector } from 'react-redux'
-import { increment, decrement } from '../features/counter/counterSlice'
-import { useGetProductByIdQuery } from '../services/shopService'
-import { addCartItem } from '../features/counter/cartSlice'
+import React, { useState, useEffect }  from 'react';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { increment, decrement, reset } from '../features/counter/counterSlice';
+import { useGetProductByIdQuery } from '../services/shopService';
+import { addCartItem } from '../features/counter/cartSlice';
+import { colors } from '../constants/colors';
+import { AntDesign } from '@expo/vector-icons';
+import { FlatList } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 
-const Product = ({ route }) => {
-    const count = useSelector(state => state.counter.value)
-    const dispatch = useDispatch()
-
+const Product = ({ navigation, route }) => {
+    const [activeIndex, setActiveIndex] = useState(0)
+    const [resetCount, setResetCount] = useState(false)
+    const { width, height } = useWindowDimensions();
+    const count = useSelector(state => state.counter.value);
+    const dispatch = useDispatch();
     const { productId } = route.params;
-    const { data: productById, error, isLoading } = useGetProductByIdQuery(productId)
-  
+    const { data: productById, error, isLoading } = useGetProductByIdQuery(productId);
+
     const handleAddCart = () => {
-        dispatch(addCartItem({...productById, quantity: count}))
+        dispatch(addCartItem({ ...productById, quantity: count }));
+    };
+
+    const renderItem = ({item, index}) => {
+        return (
+            <View>
+                <Image
+                    key={item.id}
+                    style={[styles.imageCarrousel, { width: width, height:height * 0.6}]}
+                    source={{ uri: item }}
+                />
+            </View>
+        )
     }
-   
-  return (
-    <View style={styles.productContainer}>
-        {productById ? (
-            <>
-                <View style={styles.imageContainer}>
-                    <Image
-                        resizeMode='cover'
-                        style={styles.image}
-                        source={{ uri: productById.images[0] }}
-                    />
-                    <View style={styles.dotsImages}>
-                        <Text> ...</Text>
-                    </View>
-                </View>
-                <View style={styles.descriptionContainer}>
-                    <View style={styles.descRatingContainer}>
-                        <View style={styles.titleDescription}>
-                            <View>
-                                <Text style={styles.title}>{productById.title}</Text>
-                                <Text style={styles.description}>{productById.category}</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.rating}>Estrellas</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.descriptionProduct}>
-                        <Pressable style={styles.minButton} onPress={() => dispatch(decrement())}>
-                            <Text style={styles.textIcon}>-</Text>
+
+    const renderDotIndicators = () => {
+        return productById.images.map((dot, index) => {
+            return (
+                <View
+                    key={`dot_${index}`} 
+                    style={[
+                        styles.dot,
+                        { backgroundColor: activeIndex === index ? colors.teal600 : colors.teal900 }
+                    ]}
+                />
+            )
+        })
+    }
+
+    const handleScroll = (event) => {
+        const scrollPosition = event.nativeEvent.contentOffset.x;
+        const index = Math.round(scrollPosition / width);
+        setActiveIndex(index);
+    }
+
+    useEffect(() => {
+        dispatch(reset());
+        setResetCount(false)
+    }, [resetCount]);
+
+    return (
+        <View style={styles.productContainer}>
+            {productById ? (
+                <>
+                    <View style={styles.imageContainer}>
+                        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
+                            <AntDesign name="leftcircleo" size={50} color={colors.teal600}/>
                         </Pressable>
                         <View>
-                            <Text style={styles.textCount}>{count}</Text>
+                        {productById.images && (
+                            <FlatList 
+                                style={styles.image} 
+                                data={productById.images} 
+                                renderItem={renderItem} 
+                                horizontal={true} 
+                                pagingEnabled={true}
+                                onScroll={handleScroll}
+                                keyExtractor={(item) => item}
+                                showsHorizontalScrollIndicator={false}
+                                />
+                        )}
                         </View>
-                        <Pressable style={styles.maxButton} onPress={() => dispatch(increment())}>
-                            <Text style={styles.textIcon}>+</Text>
-                        </Pressable>
+                        <View style={styles.dotsImages}>
+                            {renderDotIndicators()}
+                        </View>
                     </View>
-                    <View style={styles.storeContainer}>
-                        <View style={styles.priceContainer}>
-                            <Text style={styles.priceTitle}>${productById.price}</Text>
+                    <View style={styles.descriptionContainer}>
+                        <View style={styles.descRatingContainer}>
+                            <View style={styles.titleDescription}>
+                                <View>
+                                    <Text style={styles.title}>{productById.title}</Text>
+                                    <Text style={styles.description}>{productById.category}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.rating}>⭐ {productById.rating}</Text>
+                                </View>
+                            </View>
                         </View>
-                        <View style={styles.buttonAddCart}>
-                            <Pressable style={styles.buttonCart} onPress={handleAddCart}>
-                                <Text style={styles.cartTitle}>Agregar al Carrito</Text>
+                        <View style={styles.descriptionProduct}>
+                            <Pressable style={styles.minButton} onPress={() => dispatch(decrement())}>
+                                <Text style={styles.textIcon}>-</Text>
                             </Pressable>
-                            {/* <Button  style={styles.buttonCart} title='AGREGAR AL CARRITO' onPress={() => dispatch(addCartItem(productById))}></Button> */}
+                            <View>
+                                <Text style={styles.textCount}>{count}</Text>
+                            </View>
+                            <Pressable style={styles.maxButton} onPress={() => dispatch(increment())}>
+                                <Text style={styles.textIcon}>+</Text>
+                            </Pressable>
+                        </View>
+                        <View style={styles.storeContainer}>
+                            <View style={styles.priceContainer}>
+                                <Text style={styles.priceTitle}>${count <= 1 ? (productById.price) : (productById.price * parseInt(count))}</Text>
+                            </View>
+                            <View style={styles.buttonAddCart}>
+                            <Pressable style={styles.buttonCart} onPress={() => {
+                                handleAddCart();
+                                setResetCount(true);
+                            }}>
+                                    <Text style={styles.cartTitle}>Agregar al Carrito</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
-                </View>
-            </>
-        ) : (
-            isLoading ? <Text>Loading...</Text> : <Text>Error: {error}</Text>
-        )}
-</View>
-  )
-}
+                </>
+            ) : (
+                isLoading ? <Text>Loading...</Text> : <Text>Error: {error}</Text>
+            )}
+        </View>
+    );
+};
 
-export default Product
+export default Product;
 
 const styles = StyleSheet.create({
     productContainer: {
@@ -90,22 +146,23 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
-        resizeMode: 'cover',
     },
     dotsImages: {
         width: '100%',
-        height: 20,
-        backgroundColor: 'violet',
+        height: 30,
         display: 'flex',
         justifyContent: 'center', 
         alignItems: 'center',
+        position: 'absolute',
+        flexDirection: 'row',
         bottom: 30,
     },
     descriptionContainer: {
         width: '100%',
         height: '40%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: colors.teal600
     },
     targetContainer: {
         width: '100%',
@@ -115,7 +172,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%',
         flexDirection: 'row',
-        backgroundColor: 'red',
         justifyContent: 'center',
         alignContent: 'center',
     },
@@ -138,7 +194,6 @@ const styles = StyleSheet.create({
     priceContainer: {
         width: '50%',
         height: '100%',
-        backgroundColor: 'red',
         justifyContent: 'center',
         alignItems: 'flex-start',
         padding: 10,
@@ -146,7 +201,6 @@ const styles = StyleSheet.create({
     buttonAddCart: {
         width: '50%',
         height: '100%',
-        backgroundColor: 'violet',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -165,7 +219,6 @@ const styles = StyleSheet.create({
         width: '50%',
         height: '30%',
         padding: 10,
-        backgroundColor: 'green',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         textAlign: 'center',
@@ -193,15 +246,15 @@ const styles = StyleSheet.create({
     minButton: {
         width: 44,
         height: 44,
-        backgroundColor: colors.teal600,
+        backgroundColor: colors.teal200,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
     },
-        maxButton: {
+    maxButton: {
         width: 44,
         height: 44,
-        backgroundColor: colors.teal600,
+        backgroundColor: colors.teal200,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
@@ -211,6 +264,31 @@ const styles = StyleSheet.create({
     },
     textCount: {
         fontSize: 40,
-        color: colors.teal400
-    }
-})
+        color: colors.teal900
+    },
+    backButton: {
+        position: 'absolute',
+        top: 40,
+        left: 20,
+        width: 55,
+        height: 55,
+        // backgroundColor: colors.teal600,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        zIndex: 1,
+    },
+    imageCarrousel: {
+        width: '100%',
+        height: '100%',
+    },
+    dot: {
+        height: 8,
+        width: 8,
+        borderRadius: 4,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginHorizontal: 5,
+    },
+});

@@ -25,21 +25,26 @@ const Store = ({navigation}) => {
         setProductsFiltered(allProducts)
         setErrorSearching("")
       } else {
+        console.log('entre')
         const productsFilter = productsByCategory.filter((product) =>
         product.title.toLocaleLowerCase().includes(keyWord.toLocaleLowerCase()))
         setProductsFiltered(productsFilter)
         setErrorSearching("")
     }
     }
-  
   }, [productsByCategory, allProducts, isLoadingProducts])
 
+  console.log('keyword', keyWord)
 
 
     return (
         <View style = {styles.storeContainer}>
               <View style = {styles.SearchSection}>
-                <Search error = {errorSearching} onSearch={setKeyword} goBack={()=> navigation.goBack()}/>
+                <Search 
+                error = {errorSearching} 
+                onSearch={setKeyword} 
+                goBack={()=> navigation.goBack()}
+                />
               </View>
             <Text>Categorias</Text>
               <View style={styles.categoryContainer}>
@@ -62,8 +67,8 @@ const styles = StyleSheet.create({
     storeContainer: {
       width: '100%',
       height: '100%',
-      // justifyContent: 'center',
       backgroundColor: colors.teal200,
+      padding: 5,
     },
     SearchSection: {
       alignItems: 'center',

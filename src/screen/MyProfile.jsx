@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 import React from "react";
 import AddButton from "../components/profile/AddButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetProfileImageQuery } from "../services/shopService";
 import { truncateSessionsTable } from "../persistence";
 import { clearUser } from "../features/user/userSlice";
@@ -10,6 +10,7 @@ import { colors } from '../constants/colors'
 const MyProfile = ({navigation}) => {
     const {imageCamera, localId} = useSelector(state => state.auth.value)
     const { data: imageFromBase } = useGetProfileImageQuery(localId)
+    const dispatch = useDispatch()
 
     const launchCamera = async () => {
         navigation.navigate('Image selector')
@@ -19,8 +20,7 @@ const MyProfile = ({navigation}) => {
 
     const signOut = async () => {
         try {
-            const response = await truncateSessionsTable()
-            console.log(response);
+            await truncateSessionsTable()
             dispatch(clearUser())
         } catch (error) {
             console.log({errorSignOutDB: error});

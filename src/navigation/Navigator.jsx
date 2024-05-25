@@ -1,10 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator'
-import SignupScreen from './../screen/SignUpScreen'
-import LoginScreen from '../screen/LoginScreen';
 import AuthStackNavigator from './AuthStackNavigator';
 import { useDispatch, useSelector } from "react-redux"
 import { getSession } from '../persistence';
@@ -24,7 +21,6 @@ const Navigation = () => {
         const response = await getSession()
         if (response.rows._array.length) {
           const user = response.rows._array[0]
-          console.log({user});
           dispatch(setUser({
             email: user.email,
             localId: user.localId,
@@ -35,7 +31,7 @@ const Navigation = () => {
         console.log(error);
       }
     })()
-  }, [])
+  }, [dispatch])
   
   return (
     <NavigationContainer>

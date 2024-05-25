@@ -1,10 +1,19 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import { colors } from '../../constants/colors'
 import { FontAwesome   } from "@expo/vector-icons";
 import cartData from './../../data/cartData.json'
+import { useDispatch } from "react-redux";
+import { decrement, increment } from "../../features/counter/counterSlice";
+import { removeCartItem } from "../../features/counter/cartSlice";
 
 const CartItem = ({ cartItem }) => {
+    const dispatch = useDispatch()
+
+    const handleRemoveCart = () => {
+        dispatch(removeCartItem({ id: cartItem.id }));
+    };
+
     return (
         <View style={styles.card}>
             <View>
@@ -17,20 +26,20 @@ const CartItem = ({ cartItem }) => {
             <View style={styles.textContainer}>
                 <Text style={styles.text}>{cartItem.title}</Text>
                 <Text style={styles.text2}>{cartItem.brand}</Text>
-                <Text style={styles.textNumber}>{cartItem.price}</Text>
+                <Text style={styles.textNumber}>{cartItem.price * cartItem.quantity}</Text>
             </View>
             <View style={styles.buttonCountContainer}>
-                <View style={styles.minContainer}>
+                <Pressable style={styles.minContainer} onPress={() => dispatch(decrement())}>
                     <Text style={styles.text3}>-</Text>
-                </View>
+                </Pressable>
                 <Text style={styles.textCount}>{cartItem.quantity}</Text>
-                <View style={styles.maxContainer}>
+                <Pressable style={styles.maxContainer} onPress={() => dispatch(increment())}>
                     <Text style={styles.text3}>+</Text>
-                </View>
+                </Pressable>
             </View>
-            <View style={styles.erraseContainer}>
+            <Pressable style={styles.erraseContainer} onPress={() => handleRemoveCart()}>
                 <FontAwesome  name="trash" size={40} color={colors.teal900} />
-            </View>
+            </Pressable>
         </View>
     );
 };

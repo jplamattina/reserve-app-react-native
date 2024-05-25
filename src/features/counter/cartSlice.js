@@ -50,10 +50,26 @@ export const cartSlice = createSlice({
             }
         },
         removeCartItem: (state, { payload }) => {
-            //Logic to remove product
+            // console.log('state', state.value.items.id),
+            // console.log('payload', payload)
+            const itemsUpdated = state.value.items.filter(
+                (item) => item.id !== payload.id
+            );
+            console.log('itemsUpdated', itemsUpdated)
+            const total = itemsUpdated.reduce(
+                (acc, currentItem) =>
+                    (acc += currentItem.price * currentItem.quantity),
+                0
+            );
+            state.value = {
+                ...state.value,
+                items: itemsUpdated,
+                total,
+                updatedAt: new Date().toLocaleString(),
+            };
         },
     },
-})
+});
 
-export const {addCartItem, removeCartItem} = cartSlice.actions
-export default cartSlice.reducer
+export const { addCartItem, removeCartItem } = cartSlice.actions;
+export default cartSlice.reducer;

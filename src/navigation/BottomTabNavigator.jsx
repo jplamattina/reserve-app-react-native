@@ -2,29 +2,44 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { colors } from './../constants/colors'
-import Workshop from '../screen/Workshop';
 import Store from '../screen/Store';
 import Header from './../components/Header'
+import HeaderProfile from './../components/HeaderProfile'
 import { FontAwesome5, Entypo, AntDesign, FontAwesome } from "@expo/vector-icons"
 import HomeStackNavigator from './HomeStackNavigator';
 import CartStack from './CartStackNavigator';
 import MyProfileStackNavigator from './MyprofileStackNavigator'
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator()
 
 const BottomTabNavigator = () => {
+    const {user} = useSelector(state => state.auth.value)
+    const userName = user.split('@')[0]
   return (
-        <Tab.Navigator
-            initialRouteName='Home'
-            screenOptions={({ route }) => ({         
-                header: (() => {return route.name == 'MyProfile' ? <Header title="Welcome" description="Reserve your Activity" /> : null 
-                || route.name == 'Store' ? <Header title="Hi Jota!" description="Reserve your Activity" /> : null
-                }),
-                headerShown: true,
-                tabBarShowLabel: false,
-                tabBarStyle: styles.tabBar,
-            })}
-        >
+            <Tab.Navigator
+                initialRouteName='Home'
+                screenOptions={({ navigation, route }) => {
+                    let header = null;
+                    switch (route.name) {
+                        case 'MyProfile':
+                            header = <HeaderProfile navigation={navigation} title="" user={userName} description="change your mind?" />;
+                            break;
+                        case 'Store':
+                            header = <Header navigation={navigation} title="" user={[userName, '!']} description="Buy a gift!" />;
+                            break;
+                        default:
+                            header = null;
+                    }
+
+                    return {
+                        header: () => header,
+                        headerShown: true,
+                        tabBarShowLabel: false,
+                        tabBarStyle: styles.tabBar,
+                    };
+                }}
+            >
             <Tab.Screen
                 name='Store'
                 component={Store}

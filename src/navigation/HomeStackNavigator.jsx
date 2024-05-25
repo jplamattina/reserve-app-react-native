@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Workshop from '../screen/Workshop';
@@ -6,11 +6,13 @@ import Store from '../screen/Store';
 import FavoriteListCategory from '../screen/FavoriteListCategory';
 import Product from '../screen/Product';
 import Header from './../components/Header';
+import { useSelector } from 'react-redux';
 
 
 const Stack = createNativeStackNavigator()
 const HomeStackNavigator = () => {
-
+    const {user} = useSelector(state => state.auth.value)
+    const userName = user.split('@')[0]
 
   return (
         <Stack.Navigator
@@ -18,12 +20,10 @@ const HomeStackNavigator = () => {
             screenOptions={({ navigation, route }) => ({
                 header: () => {
                 switch (route.name) {
-                    case 'MyProfile':
-                    return <Header navigation={navigation} title="asd" user='coder' description="Reserve your Activity" />;
                     case 'Store':
-                    return <Header navigation={navigation} title="" user='coder' description="Reserve your Activity" />;
+                    return <Header navigation={navigation} title="" user={[userName, '!']} description="Buy a gift!" />;
                     case 'Workshop':
-                    return <Header navigation={navigation} title="User023" user='coder' description="Reserve your Activity" />;
+                    return <Header navigation={navigation} title="Wellcome" user={[userName, '!']} description="Reserve your Activity" />;
                     default:
                     return null;
                 }

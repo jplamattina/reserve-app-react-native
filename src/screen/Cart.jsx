@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native'
 import CartItem from '../components/cart/CarItem'
 import { colors } from './../constants/colors'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { usePostOrderMutation } from '../services/shopService'
 // import CartData from './../data/cartData.json'
 
@@ -12,6 +12,7 @@ const Cart = () => {
 
   const onConfirmOrder = () => {
     triggerPostOrder({items: CartData, user: 'Juan Pablo', total})
+    console.log('confirme la orden', total)
   }
 
   return (
@@ -41,7 +42,7 @@ const Cart = () => {
          </View>
          <View style={styles.productContainer}>
             <Text>Descuento</Text>
-            <Text>$ 0.500</Text>
+            <Text>$ 0.000</Text>
          </View>
          <View style={{ height: 1, backgroundColor: colors.teal400 }} />
          <View style={styles.productContainer}>
@@ -73,12 +74,13 @@ const styles = StyleSheet.create({
   cartContainer: {
     width: '100%',
     height: '70%',
-    backgroundColor: 'violet'
+    backgroundColor: colors.teal200
   },
   totalContainer: {
     width: '100%',
     height: '20%',
-    backgroundColor: 'darkviolet',
+    backgroundColor: colors.teal200,
+    padding: 10,
   },
   productCount: {
     width: '80%',
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'red',
+    backgroundColor: colors.teal200,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',

@@ -44,7 +44,6 @@ const ImageSelector = ({navigation}) => {
 
     const confirmImage = () => {
         try {
-            console.log('entre aca', localId)
             dispatch(setCameraImage(image))
             triggerSaveImage({image, localId})
             navigation.goBack()

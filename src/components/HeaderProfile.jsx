@@ -20,22 +20,6 @@ const Header = ({navigation, title, user, description}) => {
           <Text style = {styles.textDescription}>{description}</Text>
         </View>
       </View>
-      <Pressable  onPress={()=>navigation.navigate('MyProfile')} style = {styles.rightSideContainer}>
-          {/*<Image style = {styles.portrait} source={imageIcon}></Image>*/}
-          {imageFromBase || imageCamera  ? (
-                <Image
-                    source={{uri: imageFromBase?.image || imageCamera}}
-                    style={styles.portrait}
-                    resizeMode="cover"
-                />
-            ) : (
-                <Image
-                    source={require(defaultImageRoute)}
-                    style={styles.portrait}
-                    resizeMode="cover"
-                />
-            )}
-      </Pressable>
     </View>
   )
 }
