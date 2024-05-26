@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { increment, decrement, reset } from '../features/counter/counterSlice';
 import { useGetProductByIdQuery } from '../services/shopService';
@@ -8,10 +8,13 @@ import { colors } from '../constants/colors';
 import { AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native';
 import { useWindowDimensions } from 'react-native';
+import ModalCustom from '../components/modal/ModalCustom';
+
 
 const Product = ({ navigation, route }) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [resetCount, setResetCount] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
     const { width, height } = useWindowDimensions();
     const count = useSelector(state => state.counter.value);
     const dispatch = useDispatch();
@@ -54,10 +57,23 @@ const Product = ({ navigation, route }) => {
         setActiveIndex(index);
     }
 
+    const handleConfirmOrder = () => {
+        if(count >= 1) {
+        handleAddCart();
+        setResetCount(true);
+        setModalVisible(true)
+        }
+    }
+
+    const handleCancelModal = () => {
+        setModalVisible(false)
+    }
+
     useEffect(() => {
         dispatch(reset());
         setResetCount(false)
     }, [resetCount]);
+    
 
     return (
         <View style={styles.productContainer}>
@@ -113,15 +129,18 @@ const Product = ({ navigation, route }) => {
                                 <Text style={styles.priceTitle}>${count <= 1 ? (productById.price) : (productById.price * parseInt(count))}</Text>
                             </View>
                             <View style={styles.buttonAddCart}>
-                            <Pressable style={styles.buttonCart} onPress={() => {
-                                handleAddCart();
-                                setResetCount(true);
-                            }}>
+                            <TouchableOpacity style={styles.buttonCart} onPress={() => {handleConfirmOrder()}}>
                                     <Text style={styles.cartTitle}>Agregar al Carrito</Text>
-                                </Pressable>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
+                    <ModalCustom 
+                        modalVisible={modalVisible}
+                        handleCancelModal={handleCancelModal}
+                        secondTextcontent= {'AÑADIDO AL CARRITO CON EXITO'}
+                        textContent={`${productById.title}`}
+                    />
                 </>
             ) : (
                 isLoading ? <Text>Loading...</Text> : <Text>Error: {error}</Text>

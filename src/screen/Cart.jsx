@@ -1,20 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native'
 import CartItem from '../components/cart/CarItem'
 import { colors } from './../constants/colors'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { usePostOrderMutation } from '../services/shopService'
+import ModalCustom from '../components/modal/ModalCustom'
+import { removeCartItem } from '../features/counter/cartSlice'
 
 const Cart = () => {
+  const [modalVisible, setModalVisible] = useState(false)
   const { items: CartData, total } = useSelector(state => state.cart.value)
   const {user} = useSelector(state => state.auth.value)
   const [triggerPostOrder, result] = usePostOrderMutation()
   const userName = user.split('@')[0]
 
+  const dispatch = useDispatch();
+
   const onConfirmOrder = () => {
+    if(CartData.length != 0){
     triggerPostOrder({items: CartData, user: userName, total})
+    setModalVisible(true)
+    CartData.map(item => {
+      dispatch(removeCartItem({ id: item.id }));
+    })}
   }
 
+  const handleCancelModal = () => {
+    setModalVisible(false)
+}
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -55,6 +68,12 @@ const Cart = () => {
                    <Text style={styles.textConfirmOrder}>CONFIRM ORDER</Text>
             </Pressable>
          </View>
+         <ModalCustom 
+            modalVisible={modalVisible}
+            handleCancelModal={handleCancelModal}
+            secondTextcontent={'PRONTO RECIBIRAS EL PRODUCTO! 📦'}
+            textContent={'GRACIAS POR TU COMPRA!😊😊'}
+        />
       </View>
     </View>
   )

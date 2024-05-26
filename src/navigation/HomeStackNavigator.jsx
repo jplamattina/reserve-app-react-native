@@ -22,7 +22,7 @@ const HomeStackNavigator = () => {
                     case 'Store':
                         return <Header navigation={navigation} title="" user={[userName, '!']} description="Buy a gift!" />;
                     case 'Workshop':
-                        return <Header navigation={navigation} title="Wellcome" user={[userName, '👋!']} description="Reserve your Activity" />;
+                        return <Header navigation={navigation} title="Welcome" user={[userName, '👋!']} description="Reserve your Activity" />;
                     default:
                         return null;
                 }
