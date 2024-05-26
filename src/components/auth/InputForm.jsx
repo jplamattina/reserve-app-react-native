@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
      },
     error: {
-        paddintTop: 2,
+        paddingTop: 2,
         fontSize: 16,
         color: 'red',
         fontStyle: 'italic',

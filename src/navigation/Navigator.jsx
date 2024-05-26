@@ -19,19 +19,19 @@ const Navigation = () => {
     (async ()=> {
       try {
         const response = await getSession()
-        if (response.rows._array.length) {
-          const user = response.rows._array[0]
+         if (response.rows._array.length) {
+          const usuario = response.rows._array[0]
           dispatch(setUser({
-            email: user.email,
-            localId: user.localId,
-            idToken: user.token
+            email: usuario.email,
+            localId: usuario.localId,
+            idToken: usuario.token
           }))
         }
       } catch (error) {
         console.log(error);
       }
     })()
-  }, [dispatch])
+  }, [])
   
   return (
     <NavigationContainer>

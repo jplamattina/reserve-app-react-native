@@ -3,7 +3,6 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Workshop from '../screen/Workshop';
 import Store from '../screen/Store';
-import FavoriteListCategory from '../screen/FavoriteListCategory';
 import Product from '../screen/Product';
 import Header from './../components/Header';
 import { useSelector } from 'react-redux';
@@ -21,11 +20,11 @@ const HomeStackNavigator = () => {
                 header: () => {
                 switch (route.name) {
                     case 'Store':
-                    return <Header navigation={navigation} title="" user={[userName, '!']} description="Buy a gift!" />;
+                        return <Header navigation={navigation} title="" user={[userName, '!']} description="Buy a gift!" />;
                     case 'Workshop':
-                    return <Header navigation={navigation} title="Wellcome" user={[userName, '!']} description="Reserve your Activity" />;
+                        return <Header navigation={navigation} title="Wellcome" user={[userName, '👋!']} description="Reserve your Activity" />;
                     default:
-                    return null;
+                        return null;
                 }
                 },
                 headerShown: true,
@@ -38,10 +37,6 @@ const HomeStackNavigator = () => {
                 <Stack.Screen
                     component={Store}
                     name='Store'
-                />
-                <Stack.Screen
-                    component={FavoriteListCategory}
-                    name='FavoriteListCategory'
                 />
                 <Stack.Screen
                     component={Product}

@@ -50,13 +50,10 @@ export const cartSlice = createSlice({
             }
         },
         removeCartItem: (state, { payload }) => {
-            // console.log('state', state.value.items.id),
-            // console.log('payload', payload)
             const itemsUpdated = state.value.items.filter(
                 (item) => item.id !== payload.id
             );
-            console.log('itemsUpdated', itemsUpdated)
-            const total = itemsUpdated.reduce(
+             const total = itemsUpdated.reduce(
                 (acc, currentItem) =>
                     (acc += currentItem.price * currentItem.quantity),
                 0

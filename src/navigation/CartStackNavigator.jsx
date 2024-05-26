@@ -9,8 +9,6 @@ const Stack = createNativeStackNavigator()
 const CartStack = () => {
   return (
         <Stack.Navigator
-            /*se puede agregar un ternario para renderizar distintos headers*/
-            // screenOptions = {() => ({ header: () => {return <Header title={'Hi Jota! 👋'} description={'Reserver your Activity'} />}})}
             screenOptions={{ headerShown: false,}}
         >
                 <Stack.Screen

@@ -5,7 +5,8 @@ import { colors } from './../constants/colors'
 import Store from '../screen/Store';
 import Header from './../components/Header'
 import HeaderProfile from './../components/HeaderProfile'
-import { FontAwesome5, Entypo, AntDesign, FontAwesome } from "@expo/vector-icons"
+import Class from './../screen/Class'
+import { FontAwesome5, Entypo, AntDesign, FontAwesome, Fontisto  } from "@expo/vector-icons"
 import HomeStackNavigator from './HomeStackNavigator';
 import CartStack from './CartStackNavigator';
 import MyProfileStackNavigator from './MyprofileStackNavigator'
@@ -58,23 +59,21 @@ const BottomTabNavigator = () => {
                 }}
             />
              <Tab.Screen
-                name='MyProfile'
-                component={MyProfileStackNavigator}
+                name='Class'
+                component={Class}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return (
                             <View>
-                                <FontAwesome 
-                                    name="user-circle"
-                                    size={32}
-                                    color={focused ? colors.teal600 : colors.teal400}
-                                />
+                                <Fontisto 
+                                    name="date" size={24} 
+                                    color={focused ? colors.teal600 : colors.teal400} />
                             </View>
                         )
                     },
                 }}
             />
-            <Tab.Screen
+             <Tab.Screen
                 name='Home'r
                 component={HomeStackNavigator}
                 options={{
@@ -83,6 +82,23 @@ const BottomTabNavigator = () => {
                             <View>
                                 <Entypo
                                     name="home"
+                                    size={32}
+                                    color={focused ? colors.teal600 : colors.teal400}
+                                />
+                            </View>
+                        )
+                    },
+                }}
+            />
+             <Tab.Screen
+                name='MyProfile'
+                component={MyProfileStackNavigator}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <FontAwesome 
+                                    name="user-circle"
                                     size={32}
                                     color={focused ? colors.teal600 : colors.teal400}
                                 />

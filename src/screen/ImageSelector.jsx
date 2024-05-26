@@ -20,7 +20,6 @@ const ImageSelector = ({navigation}) => {
     };
 
     const pickImage = async () => {     
-        console.log(localId);
         try {
             const permissionCamera = await verifyCameraPermissions()
             if(permissionCamera) {

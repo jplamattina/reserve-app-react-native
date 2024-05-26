@@ -19,7 +19,7 @@ const Product = ({ navigation, route }) => {
     const { data: productById, error, isLoading } = useGetProductByIdQuery(productId);
 
     const handleAddCart = () => {
-        dispatch(addCartItem({ ...productById, quantity: count }));
+        if(count >= 1) dispatch(addCartItem({ ...productById, quantity: count }));
     };
 
     const renderItem = ({item, index}) => {

@@ -3,20 +3,25 @@ import React, { useState } from "react"
 import { FontAwesome5 } from "@expo/vector-icons"
 import { AntDesign } from "@expo/vector-icons"
 import { searchComponentsColors } from "../constants/colors"
-import { FontAwesome6 } from '@expo/vector-icons';
+import { Feather  } from '@expo/vector-icons';
 
 const Search = ({ onSearch = () => {}, error = ""}) => {
   const [keyword, setKeyword] = useState("")
+
+  const handleSearch = () => {
+    onSearch(keyword);
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Search Place"
+        placeholder="Search Your Clay"
         value={keyword}
         onChangeText={setKeyword}
       />
-      <Pressable onPress={() => onSearch(keyword)}>
-        <FontAwesome6 name="searchengin" size={24} color={searchComponentsColors.teal600}/>
+      <Pressable onPress={handleSearch}>
+      <Feather name="search" size={24} color={searchComponentsColors.teal600} />
       </Pressable>
       {error ? <Text>{error}</Text> : null}
     </View>
@@ -27,20 +32,20 @@ export default Search
 
 const styles = StyleSheet.create({
   container: {
+    width: '90%',
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 18,
     borderBottomWidth: 1,
-    borderColor: searchComponentsColors.teal600,
+    borderColor: searchComponentsColors.teal400,
     backgroundColor: 'transparent',
-    width: '80%',
+
   },
   input: {
-    width: 200,
+    width: '90%',
     height: 40,
     margin: 5,
-    padding: 8,
+    padding: 0,
     fontSize: 18,
   },
 })

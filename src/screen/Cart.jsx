@@ -2,30 +2,30 @@ import React from 'react'
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native'
 import CartItem from '../components/cart/CarItem'
 import { colors } from './../constants/colors'
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { usePostOrderMutation } from '../services/shopService'
-// import CartData from './../data/cartData.json'
 
 const Cart = () => {
   const { items: CartData, total } = useSelector(state => state.cart.value)
+  const {user} = useSelector(state => state.auth.value)
   const [triggerPostOrder, result] = usePostOrderMutation()
+  const userName = user.split('@')[0]
 
   const onConfirmOrder = () => {
-    triggerPostOrder({items: CartData, user: 'Juan Pablo', total})
-    console.log('confirme la orden', total)
+    triggerPostOrder({items: CartData, user: userName, total})
   }
 
   return (
     <View>
       <View style={styles.titleContainer}>
         <View style={styles.productCount}>
-          <Text>TENES 20 PRODUCTOS EN EL CARRITO</Text>
+          <Text>TENES {CartData.length} PRODUCTOS EN EL CARRITO</Text>
         </View>
       </View>
       <View style={styles.cartContainer}>
         <FlatList 
            data={CartData}
-           keyExtractor={pepe => pepe.id}
+           keyExtractor={item => item.id}
            renderItem={({item})=> {
                 return (
                     <CartItem
@@ -33,6 +33,7 @@ const Cart = () => {
                     />
                 )
             }}
+          ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
         />
       </View>
       <View style={styles.totalContainer}>
@@ -64,8 +65,8 @@ export default Cart
 const styles = StyleSheet.create({
   titleContainer:{
     width: '100%',
-    height: '10%',
-    backgroundColor: 'red',
+    height: '12%',
+    backgroundColor: colors.teal200,
     flexDirection: 'column',
     alignContent: 'center',
     alignItems: 'center',
@@ -73,8 +74,13 @@ const styles = StyleSheet.create({
   },
   cartContainer: {
     width: '100%',
-    height: '70%',
-    backgroundColor: colors.teal200
+    height: '68%',
+    backgroundColor: colors.teal200,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
   },
   totalContainer: {
     width: '100%',
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
   },
   productCount: {
     width: '80%',
-    height: '50%',
+    height: '40%',
     backgroundColor: colors.teal600,
     borderRadius: 20,
     alignContent: 'center',

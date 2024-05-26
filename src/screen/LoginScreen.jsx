@@ -17,25 +17,24 @@ const LoginScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (result?.data && result.isSuccess) {
-            
-            insertSession({
-                email: result.data.email,
-                localId: result.data.localId,
-                token: result.data.idToken,
-            })
-                .then(
-                    (response) => {
-                        dispatch(
-                            setUser({
-                                email: result.data.email,
-                                idToken: result.data.idToken,
-                                localId: result.data.localId,
-                            })
-                        )
-                    })
-                .catch((err) => {
-                    console.log(err)
-                })
+            (async ()=> {
+                try {
+                        const response = await insertSession({
+                            email: result.data.email,
+                            localId: result.data.localId,
+                            token: result.data.idToken,
+                        })
+                    dispatch(
+                        setUser({
+                            email: result.data.email,
+                            idToken: result.data.idToken,
+                            localId: result.data.localId,
+                        })
+                    )
+                } catch (error) {
+                  console.log(error.message);
+                }
+            })()
         }
     }, [result])
 

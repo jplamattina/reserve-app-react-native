@@ -1,14 +1,8 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { colors } from '../constants/colors'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { useGetProfileImageQuery } from '../services/shopService'
 
-const Header = ({navigation, title, user, description}) => {
-
-  const {imageCamera, localId} = useSelector(state => state.auth.value)
-  const { data: imageFromBase } = useGetProfileImageQuery(localId)
-  const defaultImageRoute = "../../assets/images/defaultProfile.png"
+const Header = ({title, user, description}) => {
 
   return (
     <View style = {styles.container}>
@@ -20,6 +14,7 @@ const Header = ({navigation, title, user, description}) => {
           <Text style = {styles.textDescription}>{description}</Text>
         </View>
       </View>
+
     </View>
   )
 }

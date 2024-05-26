@@ -7,7 +7,7 @@ export const initSQLiteDB = () => {
         db.transaction((tx) => {
             tx.executeSql(
                 "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);",
-                [], //Parameters
+                [],
                 (_, result) => resolve(result),
                 (_, error) => reject(error)
             )

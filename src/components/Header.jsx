@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     },
     textDescription: {
       color: colors.teal900,
-      marginLeft: 3,
     },
     portrait: {
         width: 45,

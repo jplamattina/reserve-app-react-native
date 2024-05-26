@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
 import { colors } from '../../constants/colors'
 import { FontAwesome   } from "@expo/vector-icons";
-import cartData from './../../data/cartData.json'
 import { useDispatch } from "react-redux";
 import { decrement, increment } from "../../features/counter/counterSlice";
 import { removeCartItem } from "../../features/counter/cartSlice";
@@ -17,11 +16,11 @@ const CartItem = ({ cartItem }) => {
     return (
         <View style={styles.card}>
             <View>
-            <Image
-                resizeMode='cover'
-                style={styles.image}
-                source={{}}
-            />
+                <Image
+                    resizeMode='cover'
+                    style={styles.image}
+                    source={{uri: cartItem.thumbnail}}
+                />
             </View>
             <View style={styles.textContainer}>
                 <Text style={styles.text}>{cartItem.title}</Text>
@@ -48,32 +47,34 @@ export default CartItem;
 
 const styles = StyleSheet.create({
     card: {
+        width: '100%',
         height: 100,
-        backgroundColor: colors.teal200,
-        padding: 3,
-        // margin: 10,
-        borderBottomWidth: 2,
+        backgroundColor: 'white',
+        padding: 5,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-    },
+        borderWidth: 2,
+        borderColor: colors.teal600,
+        borderRadius: 10,
+      },
     textContainer: {
-        width: "30%",
+        width: 130,
         height: '100%',
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "flex-start",
-        backgroundColor: 'red',
+        padding: 3,
     },
     buttonCountContainer: {
-        width: "30%",
+        width: 100,
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
 
     },
     erraseContainer: {
-        width: "20%",
+        width: 40,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
@@ -87,9 +88,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.teal600
     },
     image: {
-        width: '20%',
+        width: 100,
         height: '100%',
-        backgroundColor: 'red'
+        borderRadius: 5,
+
     },
     maxContainer: {
         width: 30,
@@ -101,11 +103,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.teal600
     },
     text: {
-        fontSize: 19,
+        fontSize: 13,
         color: colors.teal900,
     },
     text2: {
-        fontSize: 14,
+        fontSize: 12,
         color: colors.teal400,
     },
     text3: {
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
         color: colors.teal900,
     },
     textNumber: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         color: colors.teal900,
     },

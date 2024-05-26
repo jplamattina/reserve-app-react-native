@@ -15,7 +15,7 @@ export default ItemCard
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: colors.teal200,
+        backgroundColor: colors.teal600,
         width: 162,
         height: 300,
         shadowColor: colors.platinum,
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.30,
         shadowRadius: 4.65,
         elevation: 4,
-        borderRadius: 20,     
+        borderRadius: 20,
+        borderWidth: 2,
     }
 })

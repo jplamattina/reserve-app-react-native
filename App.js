@@ -8,8 +8,8 @@ import { initSQLiteDB, truncateSessionsTable } from './src/persistence';
 
 (async () => {
   try {
-    await truncateSessionsTable()
-    const response = await initSQLiteDB()
+    // await truncateSessionsTable()
+    await initSQLiteDB()
   } catch (error) {
     throw new Error(`Error creating DB: ${error.message}`);
   }
