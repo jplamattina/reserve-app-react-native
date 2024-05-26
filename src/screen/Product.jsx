@@ -130,8 +130,8 @@ const Product = ({ navigation, route }) => {
                             </View>
                             <View style={styles.buttonAddCart}>
                             <TouchableOpacity style={styles.buttonCart} onPress={() => {handleConfirmOrder()}}>
-                                    <Text style={styles.cartTitle}>Agregar al Carrito</Text>
-                                </TouchableOpacity>
+                                <Text style={styles.cartTitle}>Agregar al Carrito</Text>
+                            </TouchableOpacity>
                             </View>
                         </View>
                     </View>

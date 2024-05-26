@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import CartItem from '../components/cart/CarItem'
 import { colors } from './../constants/colors'
 import { useDispatch, useSelector } from "react-redux"
@@ -64,9 +64,9 @@ const Cart = () => {
             <Text>$ {total}</Text>
          </View>
          <View style={styles.buttonContainer}>
-            <Pressable style={styles.confirmButton} onPress={onConfirmOrder}>
+            <TouchableOpacity style={styles.confirmButton} onPress={onConfirmOrder}>
                    <Text style={styles.textConfirmOrder}>CONFIRM ORDER</Text>
-            </Pressable>
+            </TouchableOpacity>
          </View>
          <ModalCustom 
             modalVisible={modalVisible}
